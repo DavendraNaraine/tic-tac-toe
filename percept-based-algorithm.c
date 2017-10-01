@@ -8,6 +8,7 @@ Computer plays by selecting a random move at all times.
 #include <stdlib.h>
 #include <time.h>
 #include "libs/Board.h"
+#include "libs/Player.h"
 
 int main() {
 	int winner = 0;
@@ -28,12 +29,12 @@ int main() {
 	srand(time(NULL));
 
 	for (i = 0; i<9 && !winner; i++) {
-		int player = i%2 + 1;
+		Player player = i%2 + 1;
 		printBoard(board);
 
 		do {
 
-			if (player==1) {
+			if (player==COMPUTER) {
 				randChoice = rand() % 10;
 				row = --randChoice/3;
 				column = randChoice%3;
@@ -47,7 +48,7 @@ int main() {
 			}
 		} while(choice<0 || choice>9 || board [row][column]>'9');
 
-		board[row][column] = (player == 1) ? 'X' : 'O';
+		board[row][column] = (player == COMPUTER) ? 'X' : 'O';
 		//int holder = hasWinner(board, line);
 		if (hasWinner(board, line)) { winner = player; }
 	}
@@ -58,7 +59,7 @@ int main() {
 
 	if(!winner) {
 		printf("The game is a draw\n");
-	} 	else  if (winner==1){
+	} 	else  if (winner==COMPUTER){
 			printf("Computer has won\n");
 		}
 		else {
