@@ -17,8 +17,5 @@ void printResult(Result result) {
     case USER_WINS:
       printf("You won\n");
       break;
-
-    default:
-      break;
   }
 }
