@@ -49,7 +49,6 @@ int main() {
 		} while(choice<0 || choice>9 || board [row][column]>'9');
 
 		board[row][column] = (player == COMPUTER) ? 'X' : 'O';
-		//int holder = hasWinner(board, line);
 		if (hasWinner(board, line)) { winner = player; }
 	}
 
