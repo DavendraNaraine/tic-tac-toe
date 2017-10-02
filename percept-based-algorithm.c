@@ -29,8 +29,6 @@ int main() {
 	Result result = DRAW;
 	Player activePlayer = COMPUTER;
 
-	printBoard(board);
-
 	// Perform maximum (or less) number of moves.
 	for (i = 0; i < MAX_MOVES; i++) {
 		printBoard(board);
