@@ -6,17 +6,21 @@ Computer plays by selecting a random move at all times.
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "libs/Board.h"
 #include "libs/Player.h"
+#include "libs/Result.h"
+#include "libs/utils.h"
+
+#define MAX_MOVES 9
 
 int main() {
-	int winner = 0;
+	init();
+
+	int i;
 	int choice = 0;
 	int row = 0;
 	int column = 0;
 	int line = 0;
-	int i;
 	int randChoice;
 
 	Board board = {
@@ -25,44 +29,50 @@ int main() {
 		{'7','8','9'}
 	};
 
-	/*To prevent sequence repetition between random runs*/
-	srand(time(NULL));
+	Result result = DRAW;
+	Player activePlayer = COMPUTER;
 
-	for (i = 0; i<9 && !winner; i++) {
-		Player player = i%2 + 1;
+
+	// Perform maximum (or less) number of moves.
+	for (i = 0; i < MAX_MOVES; i++) {
 		printBoard(board);
 
+		// Collect from user or generate for comuter a valid move.
 		do {
+			switch (activePlayer) {
+				case COMPUTER:
+					randChoice = rand() % 10;
+					row = --randChoice/3;
+					column = randChoice%3;
+					break;
 
-			if (player==COMPUTER) {
-				randChoice = rand() % 10;
-				row = --randChoice/3;
-				column = randChoice%3;
-			} else {
-				printf("\nPlease enter the number of the square "
-					"where you want to place your O: ");
-				scanf("%d", &choice);
+				case USER:
+					printf("\nPlease enter the number of the square where you want to place your O: ");
+					scanf("%d", &choice);
+					row = --choice/3;
+					column = choice%3;
+					break;
 
-				row = --choice/3;
-				column = choice%3;
+				default:
+					break;
 			}
 		} while(choice<0 || choice>9 || board [row][column]>'9');
 
-		board[row][column] = (player == COMPUTER) ? 'X' : 'O';
-		if (hasWinner(board, line)) { winner = player; }
+		// Update board
+		board[row][column] = (activePlayer == COMPUTER) ? 'X' : 'O';
+
+		// check for winner and break from moves loop
+		if (hasWinner(board, line)) {
+			result = activePlayer == COMPUTER ? COMPUTER_WINS : USER_WINS;
+			break;
+		}
+
+		// toggle active player
+		activePlayer = activePlayer == COMPUTER ? USER : COMPUTER;
 	}
 
-
-
 	printBoard(board);
+	printResult(result);
 
-	if(!winner) {
-		printf("The game is a draw\n");
-	} 	else  if (winner==COMPUTER){
-			printf("Computer has won\n");
-		}
-		else {
-			printf("You won\n");
-		}
 	return 0;
 }
