@@ -25,7 +25,7 @@ int main() {
 		{'7','8','9'}
 	};
 
-	/*To prevent sequence repetition between runs*/
+	/*To prevent sequence repetition between random runs*/
 	srand(time(NULL));
 
 	for (i = 0; i<9 && !winner; i++) {
