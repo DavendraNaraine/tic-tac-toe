@@ -20,7 +20,6 @@ int main() {
 	int choice;
 	int row;
 	int column;
-	int line = 0;
 
 	Board board = {
 		{'1','2','3'},
@@ -61,7 +60,7 @@ int main() {
 		board[row][column] = (activePlayer == COMPUTER) ? 'X' : 'O';
 
 		// check for winner and break from moves loop
-		if (hasWinner(board, line)) {
+		if (hasWinner(board)) {
 			result = activePlayer == COMPUTER ? COMPUTER_WINS : USER_WINS;
 			break;
 		}

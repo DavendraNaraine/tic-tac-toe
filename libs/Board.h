@@ -11,7 +11,8 @@ void printBoard(Board board) {
 	printf(" %c | %c | %c\n", board[2][0], board[2][1], board[2][2]);
 }
 
-int hasWinner(Board board, int line) {
+int hasWinner(Board board) {
+	int line;
 	if((board[0][0]==board[1][1] && board[0][0]==board[2][2]) ||
 		(board[0][2]==board[1][1] && board[0][2]==board[2][0])) { return 1; }
 	for(line = 0; line <=2; line++) {
