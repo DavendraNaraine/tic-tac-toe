@@ -1,7 +1,9 @@
 #include <stdbool.h>
 #define ROWS 3
 #define COLS 3
-typedef char Board[ROWS][COLS];
+
+typedef char Tile;
+typedef Tile Board[ROWS][COLS];
 
 void printBoard(Board board) {
 	printf("\n\n");
