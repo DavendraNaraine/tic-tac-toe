@@ -5,7 +5,6 @@ Tic-Tac-Toe Percept-Based Algorithm
 Computer plays by selecting a random move at all times.
 */
 #include <stdio.h>
-#include <stdlib.h>
 #include "libs/Board.h"
 #include "libs/Player.h"
 #include "libs/Result.h"
