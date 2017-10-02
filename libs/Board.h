@@ -1,5 +1,3 @@
-#include <stdbool.h>
-#include <stdlib.h>
 #define ROWS 3
 #define COLS 3
 
