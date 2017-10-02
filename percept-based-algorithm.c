@@ -27,33 +27,32 @@ int main() {
 	};
 
 	Result result = DRAW;
+	EmptyTiles emptyTiles;
 	Player activePlayer = COMPUTER;
 
 	// Perform maximum (or less) number of moves.
 	for (i = 0; i < MAX_MOVES; i++) {
 		printBoard(board);
 
-		// Collect from user or generate for comuter a valid move choice.
-		do {
-			switch (activePlayer) {
-				case COMPUTER:
-					choice = (rand() % 9) + 1;
-					break;
+		// Generate for comuter or collect from user a valid choice.
+		switch (activePlayer) {
+			case COMPUTER:
+				emptyTiles = getEmptyTiles(board);
+				choice = randomChoiceFromEmptyTiles(emptyTiles);
+				free(emptyTiles.indices);
+				break;
 
-				case USER:
-					printf("\nPlease enter the number of the square where you want to place your O: ");
-					scanf("%d", &choice);
-					break;
+			case USER:
+				choice = collectValidChoiceFromUser(board);
+				break;
 
-				default:
-					break;
-			}
-
-			row = (choice-1)/3;
-			column = (choice-1)%3;
-		} while(choice<1 || choice>9 || board[row][column]>'9');
+			default:
+				break;
+		}
 
 		// Update board
+		row = (choice-1)/3;
+		column = (choice-1)%3;
 		board[row][column] = (activePlayer == COMPUTER) ? 'X' : 'O';
 
 		// check for winner and break from moves loop
