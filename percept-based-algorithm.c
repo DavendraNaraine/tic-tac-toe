@@ -15,11 +15,6 @@ Computer plays by selecting a random move at all times.
 int main() {
 	init();
 
-	int i;
-	int choice;
-	int row;
-	int column;
-
 	Board board = {
 		{'1','2','3'},
 		{'4','5','6'},
@@ -29,6 +24,7 @@ int main() {
 	Result result = DRAW;
 	EmptyTiles emptyTiles;
 	Player activePlayer = COMPUTER;
+	int i, choice, row, column;
 
 	// Perform maximum (or less) number of moves.
 	for (i = 0; i < MAX_MOVES; i++) {
@@ -36,32 +32,31 @@ int main() {
 
 		// Generate for comuter or collect from user a valid choice.
 		switch (activePlayer) {
+			// Compuer's turn
 			case COMPUTER:
 				emptyTiles = getEmptyTiles(board);
 				choice = randomChoiceFromEmptyTiles(emptyTiles);
-				free(emptyTiles.indices);
+				free(emptyTiles.indices); // cleanup allocated array
 				break;
 
+			// User's turn
 			case USER:
 				choice = collectValidChoiceFromUser(board);
-				break;
-
-			default:
 				break;
 		}
 
 		// Update board
 		row = (choice-1)/3;
 		column = (choice-1)%3;
-		board[row][column] = (activePlayer == COMPUTER) ? 'X' : 'O';
+		board[row][column] = activePlayer == COMPUTER ? 'X' : 'O';
 
-		// check for winner and break from moves loop
+		// Check for winner. If there exists a winner, break from moves loop
 		if (hasWinner(board)) {
 			result = activePlayer == COMPUTER ? COMPUTER_WINS : USER_WINS;
 			break;
 		}
 
-		// toggle active player
+		// Toggle active player
 		activePlayer = activePlayer == COMPUTER ? USER : COMPUTER;
 	}
 
