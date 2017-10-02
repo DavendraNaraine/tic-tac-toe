@@ -17,11 +17,10 @@ int main() {
 	init();
 
 	int i;
-	int choice = 0;
-	int row = 0;
-	int column = 0;
+	int choice;
+	int row;
+	int column;
 	int line = 0;
-	int randChoice;
 
 	Board board = {
 		{'1','2','3'},
@@ -32,31 +31,31 @@ int main() {
 	Result result = DRAW;
 	Player activePlayer = COMPUTER;
 
+	printBoard(board);
 
 	// Perform maximum (or less) number of moves.
 	for (i = 0; i < MAX_MOVES; i++) {
 		printBoard(board);
 
-		// Collect from user or generate for comuter a valid move.
+		// Collect from user or generate for comuter a valid move choice.
 		do {
 			switch (activePlayer) {
 				case COMPUTER:
-					randChoice = rand() % 10;
-					row = --randChoice/3;
-					column = randChoice%3;
+					choice = (rand() % 9) + 1;
 					break;
 
 				case USER:
 					printf("\nPlease enter the number of the square where you want to place your O: ");
 					scanf("%d", &choice);
-					row = --choice/3;
-					column = choice%3;
 					break;
 
 				default:
 					break;
 			}
-		} while(choice<0 || choice>9 || board [row][column]>'9');
+
+			row = (choice-1)/3;
+			column = (choice-1)%3;
+		} while(choice<1 || choice>9 || board[row][column]>'9');
 
 		// Update board
 		board[row][column] = (activePlayer == COMPUTER) ? 'X' : 'O';
